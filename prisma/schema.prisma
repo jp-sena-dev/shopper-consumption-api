@@ -1,0 +1,39 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  measurements Measurement[]
+
+  @@map("customers")
+}
+
+model Measurement {
+  id           String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt @map("updated_at")
+  measureValue Int         @map("measure_value")
+  measureType  MeasureType @map("measure_type")
+  hasConfirmed Boolean     @default(false) @map("has_confirmed")
+  imageUrl     String      @map("image_url")
+  month        Int         @map("month")
+  customerId   String      @map("customer_id") @db.Uuid
+  customer     Customer    @relation(fields: [customerId], references: [id])
+
+  @@unique([customerId, month, measureType], map: "unique_customer_month_measure_type", name: "customerMonthMeasureType")
+  @@map("measurements")
+}
+
+enum MeasureType {
+  WATER
+  GAS
+}
