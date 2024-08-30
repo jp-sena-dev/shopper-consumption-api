@@ -1,0 +1,11 @@
+# Git files
+.git
+.github
+
+# Docker Volumes
+.docker
+
+dist
+node_modules
+coverage
+.vscode
