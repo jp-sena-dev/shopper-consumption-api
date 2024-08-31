@@ -20,4 +20,8 @@ export class ImageHelper {
   getMimeFromNameOrExt(filenameOrExt: string): string | null {
     return mime.lookup(filenameOrExt) || null;
   }
+
+  getExtFromMime(mimeType: string): string | null {
+    return mime.extension(mimeType) || null;
+  }
 }
