@@ -21,7 +21,7 @@ import { join } from 'path';
     CustomerRepositoryModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'tmp'),
-      renderPath: '/files',
+      serveRoot: '/files',
     }),
   ],
   controllers: [AppController],
