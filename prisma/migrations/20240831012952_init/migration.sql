@@ -4,6 +4,8 @@ CREATE TYPE "MeasureType" AS ENUM ('WATER', 'GAS');
 -- CreateTable
 CREATE TABLE "customers" (
     "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "customers_pkey" PRIMARY KEY ("id")
 );
@@ -15,7 +17,7 @@ CREATE TABLE "measurements" (
     "updated_at" TIMESTAMP(3) NOT NULL,
     "measure_value" INTEGER NOT NULL,
     "measure_type" "MeasureType" NOT NULL,
-    "has_confirmed" BOOLEAN NOT NULL,
+    "has_confirmed" BOOLEAN NOT NULL DEFAULT false,
     "image_url" TEXT NOT NULL,
     "month" INTEGER NOT NULL,
     "customer_id" UUID NOT NULL,
